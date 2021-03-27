@@ -16,7 +16,7 @@ class Authentication {
     );
   }
 
-  static Future<dynamic> initializeFirebase({
+  static Future<FirebaseApp> initializeFirebase({
     required BuildContext context,
   }) async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
@@ -34,7 +34,7 @@ class Authentication {
       );
     }
 
-    return user;
+    return firebaseApp;
   }
 
   static Future<User?> signInWithGoogle({required BuildContext context}) async {

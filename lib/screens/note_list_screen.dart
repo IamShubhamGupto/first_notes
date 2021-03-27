@@ -75,10 +75,10 @@ class _NoteListScreenState extends State<NoteListScreen>{
                         
                         color: CustomColors.firebaseGrey.withOpacity(0.3),
                         child: GestureDetector(
-                          behavior: HitTestBehavior.opaque,
+                          behavior: HitTestBehavior.deferToChild,
                           onTap:() {
                             print("------TAP DETECTED----------------");
-                              Navigator.of(context).pushReplacement(
+                              Navigator.of(context).push(
                                 _routeToUserInfoScreen()
                               );
                             },
@@ -93,10 +93,10 @@ class _NoteListScreenState extends State<NoteListScreen>{
                       child: Material(
                         color: CustomColors.firebaseGrey.withOpacity(0.3),
                         child: GestureDetector(
-                          behavior: HitTestBehavior.opaque,
+                          behavior: HitTestBehavior.deferToChild,
                           onTap: (){
                             print("------TAP DETECTED----------------");
-                            Navigator.of(context).pushReplacement(
+                            Navigator.of(context).push(
                                   _routeToUserInfoScreen()
                                 );
                           },

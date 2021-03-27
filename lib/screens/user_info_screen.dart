@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_notes/screens/note_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:first_notes/res/custom_colors.dart';
 import 'package:first_notes/screens/sign_in_screen.dart';
@@ -39,10 +40,29 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     );
   }
 
+  Route _routeToNoteListScreen() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => NoteListScreen(user: _user),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var begin = Offset(-1.0, 0.0);
+        var end = Offset.zero;
+        var curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     _user = widget._user;
-
+    print("-----------------------At user info screen-------------------");
     super.initState();
   }
 
@@ -163,19 +183,6 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                       ),
                     ),
                    SizedBox(height: 16.0),
-                   Expanded(
-                     child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: FloatingActionButton(
-                          backgroundColor: const Color(0xff03dac6),
-                          foregroundColor: Colors.black,
-                          onPressed: () {
-                            // Respond to button press
-                          },
-                          child: Icon(Icons.add),
-                        ),
-                      ),
-                  ) 
             ],
           ),
         ),

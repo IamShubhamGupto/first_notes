@@ -57,6 +57,7 @@ class _SignInScreenState extends State<SignInScreen> {
               FutureBuilder(
                 future: Authentication.initializeFirebase(context: context),
                 builder: (context, snapshot) {
+                  print("-------------snapshot data = ${snapshot.data}");
                   if (snapshot.hasError) {
                     return Text(snapshot.error.toString());
                   } else if (snapshot.connectionState == ConnectionState.done) {

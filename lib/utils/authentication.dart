@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:first_notes/screens/note_list_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:first_notes/screens/user_info_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -16,24 +16,25 @@ class Authentication {
     );
   }
 
-  static Future<FirebaseApp> initializeFirebase({
+  static Future<dynamic> initializeFirebase({
     required BuildContext context,
   }) async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
 
     User? user = FirebaseAuth.instance.currentUser;
-
+    print("User value == "+user.toString());
     if (user != null) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => UserInfoScreen(
+          // blank page
+          builder: (BuildContext context) => NoteListScreen(
             user: user,
           ),
         ),
       );
     }
 
-    return firebaseApp;
+    return user;
   }
 
   static Future<User?> signInWithGoogle({required BuildContext context}) async {

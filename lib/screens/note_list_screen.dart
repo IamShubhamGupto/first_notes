@@ -18,12 +18,15 @@ class NoteListScreen extends StatefulWidget{
   _NoteListScreenState createState() => _NoteListScreenState();
 
 }
-
+bool DEBUG = false;
 class _NoteListScreenState extends State<NoteListScreen>{
   late User _user;
 
   Route _routeToUserInfoScreen() {
-    print("----------routing to user info screen-------------------");
+    if(DEBUG){
+      print("----------routing to user info screen-------------------");  
+    }
+      
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => UserInfoScreen(user:_user),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -45,7 +48,10 @@ class _NoteListScreenState extends State<NoteListScreen>{
   @override
   void initState() {
     _user = widget._user;
-    print("-----------------------At note list screen-------------------");
+    if(DEBUG){
+      print("-----------------------At note list screen-------------------");
+    }
+    
     super.initState();
   }
 
@@ -77,7 +83,10 @@ class _NoteListScreenState extends State<NoteListScreen>{
                         child: GestureDetector(
                           behavior: HitTestBehavior.deferToChild,
                           onTap:() {
-                            print("------TAP DETECTED----------------");
+                            if(DEBUG){
+                                print("------TAP DETECTED----------------");
+                            }
+                            
                               Navigator.of(context).push(
                                 _routeToUserInfoScreen()
                               );
@@ -95,7 +104,10 @@ class _NoteListScreenState extends State<NoteListScreen>{
                         child: GestureDetector(
                           behavior: HitTestBehavior.deferToChild,
                           onTap: (){
-                            print("------TAP DETECTED----------------");
+                            if(DEBUG){
+                                print("------TAP DETECTED----------------");
+                            }
+                            
                             Navigator.of(context).push(
                                   _routeToUserInfoScreen()
                                 );

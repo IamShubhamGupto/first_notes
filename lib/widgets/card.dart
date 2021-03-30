@@ -1,7 +1,5 @@
-import 'dart:html';
 
 import 'package:first_notes/res/custom_colors.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../utils/note.dart';
 
@@ -18,7 +16,7 @@ class NoteCard extends StatelessWidget {
   Widget build(BuildContext context){
     return Card(
       child: InkWell(
-        onTap: () => _onPressed(note.id),
+        onTap: () => _onPressed(note.id!),
         splashColor: CustomColors.firebaseAmber,
         child: Container(
           alignment: Alignment.center,

@@ -7,10 +7,10 @@ typedef NotePressedCallback = void Function(String noteId);
 typedef CloseNotePressedCallback = void Function();
 
 class Note{
-  final String id;
+  final String? id;
   final String title;
   final String content;
-  final DocumentReference reference;
+  final DocumentReference? reference;
 
   Note._()
     : id = null,

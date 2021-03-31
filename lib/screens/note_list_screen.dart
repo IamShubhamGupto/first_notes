@@ -1,6 +1,14 @@
 
 
+import 'dart:async';
+import 'package:first_notes/widgets/dialogs/add_note.dart';
+import 'package:first_notes/widgets/note_page.dart';
+
+import '../utils/data.dart' as data;
+import '../widgets/grid.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_notes/utils/note.dart';
 import 'package:flutter/material.dart';
 import 'package:first_notes/res/custom_colors.dart';
 import 'package:first_notes/screens/user_info_screen.dart';
@@ -20,7 +28,28 @@ class NoteListScreen extends StatefulWidget{
 }
 bool DEBUG = false;
 class _NoteListScreenState extends State<NoteListScreen>{
+  _NoteListScreenState(){
+    _currentSubscription =
+          data.loadAllNotes().listen(_updateNotes);
+  }
+
+  @override
+  void dispose() {
+    // _currentSubscription.cancel();
+    super.dispose();
+  }
+
   late User _user;
+  late StreamSubscription<QuerySnapshot> _currentSubscription;
+  bool _isLoading = true;
+  List<Note> _notes = <Note>[];
+
+  void _updateNotes(QuerySnapshot snapshot) {
+    setState(() {
+      _isLoading = false;
+      _notes = data.getNotesFromQuery(snapshot);
+    });
+  }
 
   Route _routeToUserInfoScreen() {
     if(DEBUG){
@@ -53,6 +82,18 @@ class _NoteListScreenState extends State<NoteListScreen>{
     }
     
     super.initState();
+  }
+
+  void _onCreateNotePressed() async {
+    final newNote = await showDialog<Note>(
+      context: context,
+      builder: (_) => AddNoteDialog(
+        userId: _user.uid),
+    );
+    if (newNote != null) {
+      // Save the review
+      return data.addNote(newNote);
+    }
   }
 
   @override
@@ -124,15 +165,41 @@ class _NoteListScreenState extends State<NoteListScreen>{
                       ),
                     ),
               SizedBox(height: 16.0),
+
+              Center(
+                child: Container(
+                  child: _isLoading
+                    ? CircularProgressIndicator()
+                    : _notes.isNotEmpty
+                      ? NoteGrid(
+                          notes: _notes,
+                          onNotePressed: (id) {
+                            Navigator.pushNamed(context, NotePage.route,
+                            arguments: NotePageArguments(id: id));
+                          }
+                      )
+                      : Center(
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Add your first note today !',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: CustomColors.firebaseOrange
+                              ),
+                            ),
+                            ),
+                      )  
+                ),
+              ),
+              SizedBox(height: 4.0),
                    Expanded(
                      child: Align(
                         alignment: Alignment.bottomRight,
                         child: FloatingActionButton(
                           backgroundColor: const Color(0xff03dac6),
                           foregroundColor: Colors.black,
-                          onPressed: () {
-                            // Respond to button press
-                          },
+                          onPressed: _onCreateNotePressed,
                           child: Icon(Icons.add),
                         ),
                       ),

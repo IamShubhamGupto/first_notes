@@ -29,7 +29,7 @@ class NoteCard extends StatelessWidget {
                     '${note.title}',
                       style: TextStyle(
                         color: CustomColors.firebaseYellow,
-                        fontSize: 22,
+                        fontSize: 20,
                       )
                     ),
                   )

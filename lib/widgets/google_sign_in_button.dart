@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:first_notes/screens/note_list_screen.dart';
@@ -40,6 +41,16 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                 });
 
                 if (user != null) {
+                  FirebaseFirestore db = FirebaseFirestore.instance;
+                  if(FirebaseAuth.instance.
+                    currentUser?.email == null ||
+                    FirebaseAuth.instance
+                    .currentUser?.displayName == null){
+                      //new user
+                      db.collection('users').doc(FirebaseAuth.instance.currentUser!.uid)
+                        .collection('notes');
+                    }
+
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => NoteListScreen(

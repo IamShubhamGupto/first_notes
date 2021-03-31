@@ -91,7 +91,13 @@ Widget build(BuildContext context){
         ) 
           
     );
+  }
 }
+
+class NotePageArguments {
+  final String id;
+
+  NotePageArguments({required this.id});
 }
 
 

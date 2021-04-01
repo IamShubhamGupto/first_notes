@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import './note.dart';
-Future<void> addNote(Note note) {
+Future<void> addNote(Note? note) {
   final notes = FirebaseFirestore.instance
       .collection('users')
       .doc(FirebaseAuth.instance.currentUser!.uid)
       .collection('notes');
   return notes.add({
-    'title': note.title,
+    'title': note!.title,
     'content': note.content,
   });
 }

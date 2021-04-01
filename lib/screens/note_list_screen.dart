@@ -41,7 +41,7 @@ class _NoteListScreenState extends State<NoteListScreen>{
 
   late User _user;
   late StreamSubscription<QuerySnapshot> _currentSubscription;
-  bool _isLoading = true;
+  bool _isLoading = false;
   List<Note> _notes = <Note>[];
 
   void _updateNotes(QuerySnapshot snapshot) {

@@ -42,14 +42,11 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
 
                 if (user != null) {
                   FirebaseFirestore db = FirebaseFirestore.instance;
-                  if(FirebaseAuth.instance.
-                    currentUser?.email == null ||
-                    FirebaseAuth.instance
-                    .currentUser?.displayName == null){
-                      //new user
-                      db.collection('users').doc(FirebaseAuth.instance.currentUser!.uid)
-                        .collection('notes');
-                    }
+                  // db.collection('users').snapshots().contains(FirebaseAuth.instance.currentUser!.uid).then((value) => null)
+
+                  // db.collection('users').snapshots().contains(FirebaseAuth.instance.currentUser!.uid).then((value) {
+
+                  //   });
 
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(

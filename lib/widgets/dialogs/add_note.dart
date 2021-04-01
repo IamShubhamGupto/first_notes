@@ -1,9 +1,8 @@
-import 'dart:ffi';
 import 'dart:math' as math;
 
 import 'package:first_notes/res/custom_colors.dart';
 import 'package:flutter/material.dart';
-import '../utils/data.dart' as data;
+import '../../utils/data.dart' as data;
 import '../../utils/note.dart';
 
 class AddNoteDialog extends StatefulWidget{
@@ -77,9 +76,10 @@ class _AddNoteDialogState extends State<AddNoteDialog> {
         ElevatedButton(
           child: Text('SAVE'),
           onPressed: () {
-            Note note;
-            note.title = title;
-            note.content = content;
+            Note? note;
+            note?.title = title;
+            note?.content = content;
+            print('========================Note recieved ${note!.title}, ${note.content}=========================');
             return Navigator.pop(
             context,
             data.addNote(

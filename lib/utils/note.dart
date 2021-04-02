@@ -22,6 +22,14 @@ class Note{
     
   //   // reference = null;
   // }
+  // 
+  // 
+  
+  Note.fromDialog({String? title, String? content})
+      : id = null,
+      title = title!,
+      content = content!;
+
   Note.fromSnapshot(DocumentSnapshot snapshot)
       : id = snapshot.id,
         title = snapshot.data()!['title'],

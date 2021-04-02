@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import './note.dart';
 Future<void> addNote(Note? note) {
-  final notes = FirebaseFirestore.instance
+  return FirebaseFirestore.instance
       .collection('users')
       .doc(FirebaseAuth.instance.currentUser!.uid)
-      .collection('notes');
-  return notes.add({
+      .collection('notes')
+      .add({
     'title': note!.title,
     'content': note.content,
   });
@@ -26,6 +26,21 @@ Stream<QuerySnapshot> loadAllNotes() {
       .limit(50)
       .snapshots();
 }
+
+
+// List<Note> loadAllNotes() {
+//   List<Note> notes;
+//   FirebaseFirestore.instance
+//         .collection('users')
+//         .doc(FirebaseAuth.instance.currentUser!.uid)
+//         .collection('notes')
+//         .get()
+//         .then((querySnapshot ) => {
+//           notes = querySnapshot.docs.map((DocumentSnapshot doc) => {
+//             Note.fromSnapshot(doc)
+//           }).toList()
+//         });
+// }
 
 Future<Note> getNote(String noteId) {
   return FirebaseFirestore.instance

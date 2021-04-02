@@ -76,14 +76,12 @@ class _AddNoteDialogState extends State<AddNoteDialog> {
         ElevatedButton(
           child: Text('SAVE'),
           onPressed: () {
-            Note? note;
-            note?.title = title;
-            note?.content = content;
-            print('========================Note recieved ${note!.title}, ${note.content}=========================');
+            print('========================Note recieved $title, $content=========================');
             return Navigator.pop(
             context,
-            data.addNote(
-              note
+            Note.fromDialog(
+              title: title,
+              content: content
             )
           );
           },

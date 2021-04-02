@@ -35,16 +35,17 @@ class _NoteListScreenState extends State<NoteListScreen>{
 
   @override
   void dispose() {
-    // _currentSubscription.cancel();
+     _currentSubscription.cancel();
     super.dispose();
   }
 
   late User _user;
   late StreamSubscription<QuerySnapshot> _currentSubscription;
-  bool _isLoading = false;
+  bool _isLoading = true;
   List<Note> _notes = <Note>[];
 
   void _updateNotes(QuerySnapshot snapshot) {
+    print("Stream value ${snapshot.docs.toString()}");
     setState(() {
       _isLoading = false;
       _notes = data.getNotesFromQuery(snapshot);
@@ -92,12 +93,18 @@ class _NoteListScreenState extends State<NoteListScreen>{
     );
     if (newNote != null) {
       // Save the review
+      setState(() {
+            _isLoading = false;
+            _notes.add(newNote);
+            });
+      
       return data.addNote(newNote);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    print("======$_notes================");
     return Scaffold(
       backgroundColor: CustomColors.firebaseNavy,
       appBar: AppBar(

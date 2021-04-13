@@ -19,6 +19,8 @@ class NoteGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.count(
       crossAxisCount: 2,
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
       children: _notes
           .map((note) => NoteCard(
                 note: note,

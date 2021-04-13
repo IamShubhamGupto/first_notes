@@ -106,115 +106,129 @@ class _NoteListScreenState extends State<NoteListScreen>{
   Widget build(BuildContext context) {
     print("======$_notes================");
     return Scaffold(
-      backgroundColor: CustomColors.firebaseNavy,
-      appBar: AppBar(
-        elevation: 0,
         backgroundColor: CustomColors.firebaseNavy,
-        title: AppBarTitle(),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 16.0,
-            right: 16.0,
-            bottom: 20.0,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(),
-              _user.photoURL != null
-                  ? ClipOval(
-                      child: Material(
-                        
-                        color: CustomColors.firebaseGrey.withOpacity(0.3),
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.deferToChild,
-                          onTap:() {
-                            if(DEBUG){
-                                print("------TAP DETECTED----------------");
-                            }
-                            
-                              Navigator.of(context).push(
-                                _routeToUserInfoScreen()
-                              );
-                            },
-                          child: Image.network(
-                            _user.photoURL!,
-                            fit: BoxFit.fitHeight,
-                          ), 
-                        ),
-                      ),
-                    )
-                  : ClipOval(
-                      child: Material(
-                        color: CustomColors.firebaseGrey.withOpacity(0.3),
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.deferToChild,
-                          onTap: (){
-                            if(DEBUG){
-                                print("------TAP DETECTED----------------");
-                            }
-                            
-                            Navigator.of(context).push(
-                                  _routeToUserInfoScreen()
-                                );
-                          },
-                          child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Icon(
-                            Icons.person,
-                            size: 60,
-                            color: CustomColors.firebaseGrey,
-                          ),
-                        ),
-                        )
-                      ),
-                    ),
-              SizedBox(height: 16.0),
-
-              Center(
-                child: Container(
-                  child: _isLoading
-                    ? CircularProgressIndicator()
-                    : _notes.isNotEmpty
-                      ? NoteGrid(
-                          notes: _notes,
-                          onNotePressed: (id) {
-                            Navigator.pushNamed(context, NotePage.route,
-                            arguments: NotePageArguments(id: id));
-                          }
-                      )
-                      : Center(
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Add your first note today !',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: CustomColors.firebaseOrange
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: CustomColors.firebaseNavy,
+          title: AppBarTitle(),
+        ),
+        body: Stack(
+          
+          children: [
+              SingleChildScrollView(
+              child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 16.0,
+                    right: 16.0,
+                    bottom: 20.0,
+                  ),
+                  child: Column(
+                    
+                    mainAxisSize: MainAxisSize.min,
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(),
+                      _user.photoURL != null
+                          ? ClipOval(
+                              child: Material(
+                                
+                                color: CustomColors.firebaseGrey.withOpacity(0.3),
+                                child: GestureDetector(
+                                  behavior: HitTestBehavior.deferToChild,
+                                  onTap:() {
+                                    if(DEBUG){
+                                        print("------TAP DETECTED----------------");
+                                    }
+                                    
+                                      Navigator.of(context).push(
+                                        _routeToUserInfoScreen()
+                                      );
+                                    },
+                                  child: Image.network(
+                                    _user.photoURL!,
+                                    fit: BoxFit.fitWidth,
+                                  ), 
+                                ),
+                              ),
+                            )
+                          : ClipOval(
+                              child: Material(
+                                color: CustomColors.firebaseGrey.withOpacity(0.3),
+                                child: GestureDetector(
+                                  behavior: HitTestBehavior.deferToChild,
+                                  onTap: (){
+                                    if(DEBUG){
+                                        print("------TAP DETECTED----------------");
+                                    }
+                                    
+                                    Navigator.of(context).push(
+                                          _routeToUserInfoScreen()
+                                        );
+                                  },
+                                  child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Icon(
+                                    Icons.person,
+                                    size: 60,
+                                    color: CustomColors.firebaseGrey,
+                                  ),
+                                ),
+                                )
                               ),
                             ),
-                            ),
-                      )  
-                ),
-              ),
-              SizedBox(height: 4.0),
-                   Expanded(
-                     child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: FloatingActionButton(
-                          backgroundColor: const Color(0xff03dac6),
-                          foregroundColor: Colors.black,
-                          onPressed: _onCreateNotePressed,
-                          child: Icon(Icons.add),
+                      SizedBox(height: 16.0),
+                      Center(
+                        
+                        child: Container(
+                          child: _isLoading
+                            ? CircularProgressIndicator()
+                            : _notes.isNotEmpty
+                              ?Expanded(
+                                      child: SizedBox(
+                                          height: 0.8*MediaQuery.of(context).size.height,
+                                          child: NoteGrid(
+                                            notes: _notes,
+                                            onNotePressed: (id) {
+                                                Navigator.pushNamed(context, NotePage.route,
+                                                arguments: NotePageArguments(id: id));
+                                              }
+                                          ),
+                                        )
+                                  )
+                              : Center(
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      'Add your first note today !',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: CustomColors.firebaseOrange
+                                      ),
+                                    ),
+                                    ),
+                              )  
                         ),
                       ),
-                  ) 
-            ],
-          ),
-        ),
-      ),
+                      SizedBox(height: 4.0),
+                          Flexible(
+                            child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: FloatingActionButton(
+                                  backgroundColor: const Color(0xff03dac6),
+                                  foregroundColor: Colors.black,
+                                  onPressed: _onCreateNotePressed,
+                                  child: Icon(Icons.add),
+                                ),
+                              ),
+                          ) 
+                    ],
+                  ),
+                ),
+              )
+            ),
+          ]
+      )
     );
   }
 }

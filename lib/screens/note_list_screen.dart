@@ -184,18 +184,26 @@ class _NoteListScreenState extends State<NoteListScreen>{
                           child: _isLoading
                             ? CircularProgressIndicator()
                             : _notes.isNotEmpty
-                              ?Expanded(
-                                      child: SizedBox(
-                                          height: 0.8*MediaQuery.of(context).size.height,
-                                          child: NoteGrid(
-                                            notes: _notes,
-                                            onNotePressed: (id) {
-                                                Navigator.pushNamed(context, NotePage.route,
-                                                arguments: NotePageArguments(id: id));
-                                              }
-                                          ),
-                                        )
-                                  )
+                              ?SizedBox(
+                                height: MediaQuery.of(context).size.height,
+                                child: Flex(
+                                  direction: Axis.vertical,
+                                  children: [
+                                      Expanded(
+                                        child: SizedBox(
+                                            height: 0.8*MediaQuery.of(context).size.height,
+                                            child: NoteGrid(
+                                              notes: _notes,
+                                              onNotePressed: (id) {
+                                                  Navigator.pushNamed(context, NotePage.route,
+                                                  arguments: NotePageArguments(id: id));
+                                                }
+                                            ),
+                                          )
+                                    )
+                                  ],
+                                ),
+                              )
                               : Center(
                                   child: Container(
                                     alignment: Alignment.center,
@@ -210,23 +218,28 @@ class _NoteListScreenState extends State<NoteListScreen>{
                               )  
                         ),
                       ),
-                      SizedBox(height: 4.0),
-                          Flexible(
-                            child: Align(
-                                alignment: Alignment.bottomRight,
-                                child: FloatingActionButton(
-                                  backgroundColor: const Color(0xff03dac6),
-                                  foregroundColor: Colors.black,
-                                  onPressed: _onCreateNotePressed,
-                                  child: Icon(Icons.add),
-                                ),
-                              ),
-                          ) 
+                      //SizedBox(height: 4.0),
+                      
                     ],
                   ),
                 ),
               )
             ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    right: 8.0,
+                    bottom: 8.0,
+                  ),
+                  child: FloatingActionButton(
+                    backgroundColor: const Color(0xff03dac6),
+                    foregroundColor: Colors.black,
+                    onPressed: _onCreateNotePressed,
+                    child: Icon(Icons.add),
+                  ),
+              )
+            )
           ]
       )
     );
